@@ -3,84 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ordem Paranormal - Enhanced Dice Roller System">
     <title>Ordem Paranormal - Dice Roller</title>
     <style>
-        :root {
-            --primary-color: #1a1a2e;
-            --secondary-color: #16213e;
-            --accent-color: #0f3460;
-            --highlight-color: #e94560;
-            --text-light: #eaeaea;
-            --text-dark: #2d2d2d;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-            --danger-color: #e74c3c;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            --transition: all 0.3s ease;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-        }
-
         body {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: var(--text-light);
-            transition: var(--transition);
-        }
-
-        body.light-mode {
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-            color: var(--text-dark);
-        }
-
-        /* Header */
-        header {
-            background: rgba(26, 26, 46, 0.95);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 3px solid var(--highlight-color);
-            transition: var(--transition);
+            color: #ecf0f1;
         }
 
-        body.light-mode header {
-            background: rgba(245, 245, 245, 0.95);
-            border-bottom: 3px solid var(--accent-color);
+        .container {
+            background: rgba(20, 20, 40, 0.95);
+            border: 2px solid #e94560;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(233, 69, 96, 0.3);
+            animation: slideIn 0.6s ease-out;
         }
 
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            background: linear-gradient(45deg, var(--highlight-color), #ff6b9d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: slideDown 0.6s ease;
-        }
-
-        header p {
-            font-size: 0.9em;
-            opacity: 0.8;
-            letter-spacing: 2px;
-        }
-
-        @keyframes slideDown {
+        @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateY(-30px);
@@ -91,1435 +44,577 @@
             }
         }
 
-        /* Container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #e94560, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
         }
 
-        /* Controls Bar */
-        .controls-bar {
-            display: flex;
+        .subtitle {
+            text-align: center;
+            color: #bdc3c7;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 30px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
         }
 
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.9em;
             font-weight: 600;
-            transition: var(--transition);
+            color: #f39c12;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, var(--highlight-color), #ff6b9d);
-            color: white;
+        input[type="number"],
+        select {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #e94560;
+            border-radius: 8px;
+            color: #ecf0f1;
+            font-size: 1em;
+            transition: all 0.3s ease;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--highlight-color);
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #f39c12;
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
         }
 
-        .btn-secondary {
-            background: var(--accent-color);
-            color: white;
+        input[type="number"]::placeholder {
+            color: #7f8c8d;
         }
 
-        .btn-secondary:hover {
-            background: #1a5a7a;
-            transform: translateY(-3px);
-        }
-
-        .btn-toggle {
-            background: var(--accent-color);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-        }
-
-        .btn-toggle:hover {
-            background: var(--highlight-color);
-        }
-
-        body.light-mode .btn-secondary {
-            background: #d3d3d3;
-            color: var(--text-dark);
-        }
-
-        body.light-mode .btn-toggle {
-            background: #d3d3d3;
-            color: var(--text-dark);
-        }
-
-        /* Main Layout */
-        .main-wrapper {
+        .button-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 15px;
             margin-bottom: 30px;
         }
 
-        @media (max-width: 1024px) {
-            .main-wrapper {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Cards */
-        .card {
-            background: rgba(22, 33, 62, 0.8);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(233, 69, 96, 0.2);
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--highlight-color);
-            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.3);
-        }
-
-        body.light-mode .card {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #e0e0e0;
-            color: var(--text-dark);
-        }
-
-        .card h2 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: var(--highlight-color);
-            border-bottom: 2px solid var(--highlight-color);
-            padding-bottom: 10px;
-        }
-
-        body.light-mode .card h2 {
-            color: var(--accent-color);
-            border-bottom-color: var(--accent-color);
-        }
-
-        /* Dice Roller Section */
-        .dice-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .dice-btn {
-            padding: 15px;
-            border: 2px solid var(--highlight-color);
-            background: transparent;
-            color: var(--highlight-color);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1.1em;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 60px;
-        }
-
-        .dice-btn:hover {
-            background: var(--highlight-color);
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px var(--highlight-color);
-        }
-
-        .dice-btn.active {
-            background: var(--highlight-color);
-            color: white;
-        }
-
-        body.light-mode .dice-btn {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-
-        body.light-mode .dice-btn:hover,
-        body.light-mode .dice-btn.active {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        /* Input Section */
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 0.95em;
-        }
-
-        .input-group input,
-        .input-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--accent-color);
-            border-radius: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            color: var(--text-light);
+        button {
+            padding: 14px 24px;
             font-size: 1em;
-            transition: var(--transition);
-        }
-
-        .input-group input:focus,
-        .input-group select:focus {
-            outline: none;
-            border-color: var(--highlight-color);
-            box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
-        }
-
-        body.light-mode .input-group input,
-        body.light-mode .input-group select {
-            background: white;
-            color: var(--text-dark);
-            border-color: #d0d0d0;
-        }
-
-        body.light-mode .input-group input:focus,
-        body.light-mode .input-group select:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 15px rgba(15, 52, 96, 0.3);
-        }
-
-        /* Roll Result */
-        .roll-result {
-            background: rgba(39, 174, 96, 0.1);
-            border: 2px solid var(--success-color);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            text-align: center;
-            animation: popIn 0.5s ease;
-        }
-
-        @keyframes popIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .roll-result.hidden {
-            display: none;
-        }
-
-        .roll-result .result-label {
-            font-size: 0.9em;
-            opacity: 0.8;
-            margin-bottom: 5px;
-        }
-
-        .roll-result .result-value {
-            font-size: 2.5em;
-            font-weight: 700;
-            color: var(--success-color);
-            margin-bottom: 10px;
-        }
-
-        .roll-result .result-details {
-            font-size: 0.9em;
-            opacity: 0.8;
-            word-break: break-all;
-        }
-
-        body.light-mode .roll-result {
-            background: rgba(39, 174, 96, 0.1);
-            border-color: var(--success-color);
-        }
-
-        /* Modifier Section */
-        .modifier-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .modifier-inputs {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Character Management */
-        .character-list {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-
-        .character-item {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: var(--transition);
-            border-left: 4px solid var(--highlight-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .character-item:hover {
-            background: rgba(233, 69, 96, 0.2);
-            transform: translateX(5px);
-        }
-
-        .character-item.active {
-            background: rgba(233, 69, 96, 0.3);
-            border-left-color: #ff6b9d;
-        }
-
-        .character-name {
             font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        .character-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .char-btn {
-            padding: 5px 10px;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8em;
-            transition: var(--transition);
-        }
-
-        .char-btn-delete {
-            background: var(--danger-color);
-            color: white;
-        }
-
-        .char-btn-delete:hover {
-            background: #c0392b;
-        }
-
-        body.light-mode .character-item {
-            background: rgba(0, 0, 0, 0.05);
-            border-left-color: var(--accent-color);
-        }
-
-        body.light-mode .character-item:hover {
-            background: rgba(15, 52, 96, 0.1);
-        }
-
-        body.light-mode .character-item.active {
-            background: rgba(15, 52, 96, 0.15);
-        }
-
-        /* Roll History */
-        .history-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .history-item {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
             border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--accent-color);
-            transition: var(--transition);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .history-item:hover {
-            background: rgba(15, 52, 96, 0.3);
-            transform: translateX(5px);
+        .btn-roll {
+            background: linear-gradient(135deg, #e94560, #e84545);
+            color: white;
+            grid-column: 1 / 3;
         }
 
-        .history-time {
-            font-size: 0.8em;
+        .btn-roll:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-roll:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-roll:disabled {
             opacity: 0.6;
-            margin-bottom: 5px;
+            cursor: not-allowed;
         }
 
-        .history-roll {
-            font-weight: 600;
-            font-size: 1.2em;
-            color: var(--highlight-color);
-            margin-bottom: 5px;
+        .btn-clear {
+            background: rgba(127, 140, 141, 0.3);
+            color: #bdc3c7;
+            border: 1px solid #7f8c8d;
         }
 
-        .history-description {
-            font-size: 0.9em;
-            opacity: 0.8;
+        .btn-clear:hover {
+            background: rgba(127, 140, 141, 0.5);
+            border-color: #95a5a6;
         }
 
-        body.light-mode .history-item {
-            background: rgba(0, 0, 0, 0.05);
-            border-left-color: #0f3460;
+        .btn-copy {
+            background: rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
         }
 
-        body.light-mode .history-item:hover {
-            background: rgba(15, 52, 96, 0.1);
+        .btn-copy:hover {
+            background: rgba(46, 204, 113, 0.5);
         }
 
-        body.light-mode .history-roll {
-            color: var(--accent-color);
-        }
-
-        /* Probability Calculator */
-        .probability-grid {
+        .dice-display {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-bottom: 30px;
+            min-height: 100px;
+            justify-content: center;
         }
 
-        .prob-item {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            border-radius: 6px;
-            text-align: center;
-            border: 1px solid var(--accent-color);
-            transition: var(--transition);
-        }
-
-        .prob-item:hover {
-            border-color: var(--highlight-color);
-            transform: scale(1.05);
-        }
-
-        .prob-value {
-            font-weight: 600;
-            color: var(--highlight-color);
-            font-size: 1.2em;
-        }
-
-        .prob-label {
-            font-size: 0.7em;
-            opacity: 0.7;
-            margin-top: 5px;
-        }
-
-        body.light-mode .prob-item {
-            background: rgba(0, 0, 0, 0.05);
-            border-color: #d0d0d0;
-        }
-
-        body.light-mode .prob-item:hover {
-            border-color: var(--accent-color);
-        }
-
-        body.light-mode .prob-value {
-            color: var(--accent-color);
-        }
-
-        /* Settings Panel */
-        .settings-panel {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .setting-item {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
+        .dice {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #e94560, #f39c12);
             border-radius: 8px;
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+            animation: diceRoll 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--accent-color);
-            transition: var(--transition);
-            border-radius: 24px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: var(--transition);
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background-color: var(--highlight-color);
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-        }
-
-        body.light-mode .setting-item {
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        /* Animations */
-        @keyframes roll {
+        @keyframes diceRoll {
             0% {
-                transform: rotateX(0deg) rotateY(0deg);
-            }
-            100% {
-                transform: rotateX(720deg) rotateY(720deg);
-            }
-        }
-
-        .rolling {
-            animation: roll 0.6s ease-out;
-        }
-
-        @keyframes glow {
-            0%, 100% {
-                box-shadow: 0 0 5px rgba(233, 69, 96, 0.5);
+                transform: rotateX(0) rotateY(0) rotateZ(0) scale(0.5);
+                opacity: 0;
             }
             50% {
-                box-shadow: 0 0 20px rgba(233, 69, 96, 0.8);
+                transform: rotateX(720deg) rotateY(720deg) rotateZ(360deg) scale(1.1);
+            }
+            100% {
+                transform: rotateX(0) rotateY(0) rotateZ(0) scale(1);
+                opacity: 1;
             }
         }
 
-        .roll-result:not(.hidden) {
-            animation: glow 1.5s ease-in-out;
+        .dice.rolling {
+            animation: diceRolling 0.1s infinite;
         }
 
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        @keyframes diceRolling {
+            0% { transform: rotateX(30deg) rotateY(30deg); }
+            25% { transform: rotateX(60deg) rotateY(60deg); }
+            50% { transform: rotateX(90deg) rotateY(90deg); }
+            75% { transform: rotateX(120deg) rotateY(120deg); }
+            100% { transform: rotateX(150deg) rotateY(150deg); }
         }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
+        .results {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #e94560;
             border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--highlight-color);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff6b9d;
-        }
-
-        body.light-mode ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8em;
-            }
-
-            .container {
-                padding: 15px;
-            }
-
-            .dice-options {
-                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            }
-
-            .controls-bar {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .settings-panel {
-                grid-template-columns: 1fr;
-            }
-
-            .modifier-inputs {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
             padding: 20px;
-            opacity: 0.6;
-            border-top: 1px solid var(--highlight-color);
-            margin-top: 40px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-out;
         }
 
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--success-color);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            animation: slideInRight 0.3s ease;
-            z-index: 1000;
-        }
-
-        @keyframes slideInRight {
+        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateX(100px);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
             }
         }
 
-        .notification.error {
-            background: var(--danger-color);
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+            align-items: center;
         }
 
-        .notification.warning {
-            background: var(--warning-color);
+        .result-item:last-child {
+            border-bottom: none;
         }
 
-        /* Loading State */
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
+        .result-label {
+            color: #f39c12;
+            font-weight: 600;
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 30px;
-            opacity: 0.6;
+        .result-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
         }
 
-        .empty-state svg {
-            width: 64px;
-            height: 64px;
+        .history {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .history-title {
+            color: #3498db;
+            font-weight: 600;
             margin-bottom: 15px;
-            opacity: 0.4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .history-item {
+            padding: 10px;
+            background: rgba(52, 152, 219, 0.1);
+            border-left: 3px solid #3498db;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #bdc3c7;
+        }
+
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .history-empty {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .modifier-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #9b59b6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modifier-title {
+            color: #9b59b6;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        .modifier-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .modifier-input input {
+            flex: 1;
+        }
+
+        .modifier-sign {
+            color: #f39c12;
+            font-weight: bold;
+            font-size: 1.2em;
+            width: 30px;
+            text-align: center;
+        }
+
+        /* Scrollbar styling */
+        .history::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .history::-webkit-scrollbar-thumb {
+            background: rgba(52, 152, 219, 0.5);
+            border-radius: 10px;
+        }
+
+        .history::-webkit-scrollbar-thumb:hover {
+            background: rgba(52, 152, 219, 0.8);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .dice {
+                width: 70px;
+                height: 70px;
+                font-size: 2em;
+            }
+
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-roll {
+                grid-column: 1;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <h1>⚔️ Ordem Paranormal ⚔️</h1>
-        <p>Enhanced Dice Roller System</p>
-    </header>
-
-    <!-- Main Container -->
     <div class="container">
-        <!-- Controls Bar -->
-        <div class="controls-bar">
-            <button class="btn btn-secondary" onclick="openTab('roller')">🎲 Dice Roller</button>
-            <button class="btn btn-secondary" onclick="openTab('characters')">👥 Characters</button>
-            <button class="btn btn-secondary" onclick="openTab('history')">📜 History</button>
-            <button class="btn btn-secondary" onclick="openTab('calculator')">📊 Probability</button>
-            <button class="btn btn-toggle" id="soundToggle" title="Toggle Sound">🔊</button>
-            <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
-        </div>
+        <h1>⚔️ ORDEM PARANORMAL</h1>
+        <div class="subtitle">Enhanced Dice Roller System</div>
 
-        <!-- Main Content Area -->
-        <div class="main-wrapper">
-            <!-- Dice Roller Section -->
-            <div id="rollerTab" class="card">
-                <h2>🎲 Dice Roller</h2>
-                
-                <div class="input-group">
-                    <label>Select Character:</label>
-                    <select id="characterSelect" onchange="loadCharacter()">
-                        <option value="">No Character Selected</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label>Number of Dice:</label>
-                    <input type="number" id="diceCount" min="1" max="100" value="1">
-                </div>
-
-                <div class="input-group">
-                    <label>Select Dice Type:</label>
-                </div>
-
-                <div class="dice-options">
-                    <button class="dice-btn" onclick="selectDice(4)">d4</button>
-                    <button class="dice-btn" onclick="selectDice(6)">d6</button>
-                    <button class="dice-btn" onclick="selectDice(8)">d8</button>
-                    <button class="dice-btn" onclick="selectDice(10)">d10</button>
-                    <button class="dice-btn" onclick="selectDice(12)">d12</button>
-                    <button class="dice-btn active" onclick="selectDice(20)">d20</button>
-                    <button class="dice-btn" onclick="selectDice(100)">d100</button>
-                    <button class="dice-btn" onclick="selectDice(2)">Coin</button>
-                </div>
-
-                <div class="modifier-inputs">
-                    <div class="input-group">
-                        <label>Bonus/Modifier:</label>
-                        <input type="number" id="modifier" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label>Advantage/Disadvantage:</label>
-                        <select id="advantage">
-                            <option value="normal">Normal</option>
-                            <option value="advantage">Advantage (+1)</option>
-                            <option value="disadvantage">Disadvantage (-1)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label>Roll Description (Optional):</label>
-                    <input type="text" id="rollDescription" placeholder="e.g., Attack Roll, Save vs Magic, etc.">
-                </div>
-
-                <button class="btn btn-primary" onclick="rollDice()" style="width: 100%; margin-top: 15px;">
-                    🎲 ROLL DICE 🎲
-                </button>
-
-                <div id="rollResult" class="roll-result hidden">
-                    <div class="result-label" id="resultLabel">Total Result</div>
-                    <div class="result-value" id="resultValue">0</div>
-                    <div class="result-details" id="resultDetails"></div>
-                </div>
+        <div class="controls">
+            <div class="control-group">
+                <label for="numDice">Number of Dice</label>
+                <input type="number" id="numDice" min="1" max="100" value="1" placeholder="1">
             </div>
-
-            <!-- Character Management Section -->
-            <div id="charactersTab" class="card" style="display: none;">
-                <h2>👥 Character Management</h2>
-
-                <div class="input-group">
-                    <label>Character Name:</label>
-                    <input type="text" id="characterName" placeholder="Enter character name">
-                </div>
-
-                <div class="input-group">
-                    <label>Character Class:</label>
-                    <input type="text" id="characterClass" placeholder="e.g., Warrior, Mage, etc.">
-                </div>
-
-                <div class="modifier-inputs">
-                    <div class="input-group">
-                        <label>Strength Bonus:</label>
-                        <input type="number" id="strBonus" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label>Dexterity Bonus:</label>
-                        <input type="number" id="dexBonus" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label>Constitution Bonus:</label>
-                        <input type="number" id="conBonus" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label>Intelligence Bonus:</label>
-                        <input type="number" id="intBonus" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label>Wisdom Bonus:</label>
-                        <input type="number" id="wisBonus" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label>Charisma Bonus:</label>
-                        <input type="number" id="chaBonus" value="0">
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" onclick="addCharacter()" style="width: 100%; margin-bottom: 20px;">
-                    ➕ Add Character
-                </button>
-
-                <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--highlight-color);">Saved Characters:</h3>
-                <div id="charactersList" class="character-list">
-                    <div class="empty-state">No characters yet. Create your first character!</div>
-                </div>
-
-                <button class="btn btn-secondary" onclick="exportCharacters()" style="width: 100%; margin-top: 15px;">
-                    📥 Export Characters
-                </button>
+            <div class="control-group">
+                <label for="diceSides">Dice Sides</label>
+                <select id="diceSides">
+                    <option value="4">D4</option>
+                    <option value="6">D6</option>
+                    <option value="8">D8</option>
+                    <option value="10">D10</option>
+                    <option value="12">D12</option>
+                    <option value="20" selected>D20</option>
+                    <option value="100">D100</option>
+                </select>
             </div>
         </div>
 
-        <!-- Full Width Sections -->
-        <div class="main-wrapper" style="grid-template-columns: 1fr;">
-            <!-- Roll History Section -->
-            <div id="historyTab" class="card" style="display: none;">
-                <h2>📜 Roll History</h2>
-                <div id="historyList" class="history-list">
-                    <div class="empty-state">No rolls yet. Make your first roll!</div>
-                </div>
-                <button class="btn btn-secondary" onclick="clearHistory()" style="width: 100%; margin-top: 20px;">
-                    🗑️ Clear History
-                </button>
+        <div class="modifier-section">
+            <div class="modifier-title">Modifier</div>
+            <div class="modifier-input">
+                <div class="modifier-sign" id="modifierSign">+</div>
+                <input type="number" id="modifier" value="0" placeholder="0">
             </div>
+        </div>
 
-            <!-- Probability Calculator Section -->
-            <div id="calculatorTab" class="card" style="display: none;">
-                <h2>📊 Probability Calculator</h2>
-                
-                <div class="input-group">
-                    <label>Select Dice Type for Probability Analysis:</label>
-                    <select id="probDiceType" onchange="calculateProbability()">
-                        <option value="4">d4</option>
-                        <option value="6">d6</option>
-                        <option value="8">d8</option>
-                        <option value="10">d10</option>
-                        <option value="12">d12</option>
-                        <option value="20" selected>d20</option>
-                        <option value="100">d100</option>
-                    </select>
-                </div>
+        <div class="button-group">
+            <button class="btn-roll" id="rollBtn">🎲 Roll Dice</button>
+            <button class="btn-clear" id="clearBtn">Clear All</button>
+            <button class="btn-copy" id="copyBtn" style="display: none;">📋 Copy Result</button>
+        </div>
 
-                <div class="input-group">
-                    <label>Number of Dice:</label>
-                    <input type="number" id="probDiceCount" min="1" max="20" value="1" onchange="calculateProbability()">
-                </div>
+        <div class="dice-display" id="diceDisplay"></div>
 
-                <div id="probabilityResults" class="probability-grid"></div>
-
-                <div style="margin-top: 30px; padding: 20px; background: rgba(0, 0, 0, 0.2); border-radius: 8px;">
-                    <h3 style="color: var(--highlight-color); margin-bottom: 15px;">Statistics:</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-                        <div>
-                            <div style="opacity: 0.7; font-size: 0.9em;">Average Roll</div>
-                            <div style="font-size: 1.5em; color: var(--success-color); font-weight: 600;">
-                                <span id="statsAverage">0</span>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="opacity: 0.7; font-size: 0.9em;">Minimum Roll</div>
-                            <div style="font-size: 1.5em; color: var(--warning-color); font-weight: 600;">
-                                <span id="statsMin">0</span>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="opacity: 0.7; font-size: 0.9em;">Maximum Roll</div>
-                            <div style="font-size: 1.5em; color: var(--highlight-color); font-weight: 600;">
-                                <span id="statsMax">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="results" id="resultsSection" style="display: none;">
+            <div class="result-item">
+                <span class="result-label">Individual Rolls:</span>
+                <span class="result-value" id="individualResult">—</span>
             </div>
-
-            <!-- Settings Section -->
-            <div id="settingsTab" class="card" style="display: none;">
-                <h2>⚙️ Settings</h2>
-                
-                <div class="settings-panel">
-                    <div class="setting-item">
-                        <span>Sound Effects</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="soundToggleCheckbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="setting-item">
-                        <span>Dark Mode</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="darkModeCheckbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="setting-item">
-                        <span>Auto Save</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="autoSaveCheckbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="setting-item">
-                        <span>Haptic Feedback</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="hapticCheckbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <button class="btn btn-secondary" onclick="saveSettings()" style="width: 100%; margin-bottom: 10px;">
-                    💾 Save Settings
-                </button>
-
-                <button class="btn btn-secondary" onclick="resetSettings()" style="width: 100%;">
-                    🔄 Reset to Default
-                </button>
+            <div class="result-item">
+                <span class="result-label">Total (without modifier):</span>
+                <span class="result-value" id="totalResult">—</span>
             </div>
+            <div class="result-item" id="modifierResult" style="display: none;">
+                <span class="result-label">Modifier:</span>
+                <span class="result-value" id="modifierValue">—</span>
+            </div>
+            <div class="result-item" id="finalResult" style="display: none;">
+                <span class="result-label">Final Total:</span>
+                <span class="result-value" id="finalValue">—</span>
+            </div>
+        </div>
+
+        <div class="history">
+            <div class="history-title">📜 History</div>
+            <div id="historyList" class="history-empty">No rolls yet. Start rolling!</div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>Ordem Paranormal © 2026 | Enhanced Dice Roller System v2.0</p>
-        <p style="font-size: 0.8em; margin-top: 10px;">Made with ⚔️ for Paranormal Adventures</p>
-    </footer>
-
-    <!-- JavaScript -->
     <script>
-        // ==================== GLOBAL STATE ====================
-        let currentDiceType = 20;
+        const numDiceInput = document.getElementById('numDice');
+        const diceSidesSelect = document.getElementById('diceSides');
+        const modifierInput = document.getElementById('modifier');
+        const modifierSign = document.getElementById('modifierSign');
+        const rollBtn = document.getElementById('rollBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const diceDisplay = document.getElementById('diceDisplay');
+        const resultsSection = document.getElementById('resultsSection');
+        const historyList = document.getElementById('historyList');
+
         let rollHistory = [];
-        let characters = [];
-        let currentCharacter = null;
-        let settings = {
-            soundEnabled: true,
-            darkMode: true,
-            autoSave: true,
-            hapticEnabled: true
-        };
+        let lastResult = null;
 
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            loadFromLocalStorage();
-            initializeUI();
-            calculateProbability();
-            selectDice(20);
-        });
+        // Update modifier sign
+        modifierInput.addEventListener('change', updateModifierSign);
+        modifierInput.addEventListener('input', updateModifierSign);
 
-        function initializeUI() {
-            // Setup event listeners
-            document.getElementById('soundToggle').addEventListener('click', toggleSound);
-            document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
-            document.getElementById('soundToggleCheckbox').addEventListener('change', toggleSound);
-            document.getElementById('darkModeCheckbox').addEventListener('change', toggleDarkMode);
-
-            // Apply settings
-            if (!settings.darkMode) {
-                document.body.classList.add('light-mode');
-                document.getElementById('darkModeCheckbox').checked = false;
-            }
-
-            if (!settings.soundEnabled) {
-                document.getElementById('soundToggle').textContent = '🔇';
-                document.getElementById('soundToggleCheckbox').checked = false;
-            }
-
-            updateCharacterSelect();
-            displayRollHistory();
-            displayCharacters();
+        function updateModifierSign() {
+            const value = parseInt(modifierInput.value) || 0;
+            modifierSign.textContent = value >= 0 ? '+' : '−';
         }
 
-        // ==================== DICE ROLLER FUNCTIONS ====================
-        function selectDice(type) {
-            currentDiceType = type;
-            document.querySelectorAll('.dice-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
+        // Roll button
+        rollBtn.addEventListener('click', rollDice);
 
         function rollDice() {
-            const diceCount = parseInt(document.getElementById('diceCount').value) || 1;
-            const modifier = parseInt(document.getElementById('modifier').value) || 0;
-            const advantage = document.getElementById('advantage').value;
-            const description = document.getElementById('rollDescription').value || `${diceCount}d${currentDiceType}`;
+            const numDice = Math.max(1, Math.min(100, parseInt(numDiceInput.value) || 1));
+            const diceSides = parseInt(diceSidesSelect.value);
+            const modifier = parseInt(modifierInput.value) || 0;
 
-            if (diceCount < 1 || diceCount > 100) {
-                showNotification('Please enter a valid number of dice (1-100)', 'error');
-                return;
+            // Update inputs to valid values
+            numDiceInput.value = numDice;
+
+            // Clear previous results
+            diceDisplay.innerHTML = '';
+            copyBtn.style.display = 'none';
+
+            // Simulate rolling
+            let rolls = [];
+            const diceElements = [];
+
+            for (let i = 0; i < numDice; i++) {
+                const diceEl = document.createElement('div');
+                diceEl.className = 'dice rolling';
+                diceEl.textContent = '?';
+                diceDisplay.appendChild(diceEl);
+                diceElements.push(diceEl);
             }
 
-            const rollButton = event.target;
-            rollButton.classList.add('rolling');
-            
-            setTimeout(() => {
-                rollButton.classList.remove('rolling');
+            rollBtn.disabled = true;
 
-                let rolls = [];
+            setTimeout(() => {
+                rolls = [];
                 let total = 0;
 
-                // Generate rolls
-                for (let i = 0; i < diceCount; i++) {
-                    rolls.push(rollSingleDie(currentDiceType));
+                for (let i = 0; i < numDice; i++) {
+                    const roll = Math.floor(Math.random() * diceSides) + 1;
+                    rolls.push(roll);
+                    total += roll;
+
+                    diceElements[i].classList.remove('rolling');
+                    diceElements[i].textContent = roll;
                 }
 
-                // Handle advantage/disadvantage
-                if (advantage === 'advantage' && diceCount === 1) {
-                    const roll2 = rollSingleDie(currentDiceType);
-                    if (roll2 > rolls[0]) {
-                        rolls.splice(0, 1, roll2);
-                    }
-                } else if (advantage === 'disadvantage' && diceCount === 1) {
-                    const roll2 = rollSingleDie(currentDiceType);
-                    if (roll2 < rolls[0]) {
-                        rolls.splice(0, 1, roll2);
-                    }
-                }
+                const finalTotal = total + modifier;
 
-                // Calculate total
-                total = rolls.reduce((a, b) => a + b, 0) + modifier;
-
-                // Display result
-                displayRollResult(rolls, total, modifier, description);
+                // Display results
+                displayResults(rolls, total, modifier, finalTotal, diceSides);
 
                 // Add to history
-                addToHistory(description, rolls, total, modifier);
+                addToHistory(numDice, diceSides, rolls, total, modifier, finalTotal);
 
-                // Play sound
-                if (settings.soundEnabled) {
-                    playSound('success');
-                }
+                lastResult = {
+                    rolls,
+                    total,
+                    modifier,
+                    finalTotal,
+                    numDice,
+                    diceSides
+                };
 
-                // Haptic feedback
-                if (settings.hapticEnabled && navigator.vibrate) {
-                    navigator.vibrate(100);
-                }
+                copyBtn.style.display = 'block';
+                rollBtn.disabled = false;
             }, 600);
         }
 
-        function rollSingleDie(sides) {
-            return Math.floor(Math.random() * sides) + 1;
-        }
+        function displayResults(rolls, total, modifier, finalTotal, diceSides) {
+            const individualResult = document.getElementById('individualResult');
+            const totalResult = document.getElementById('totalResult');
+            const modifierResult = document.getElementById('modifierResult');
+            const modifierValue = document.getElementById('modifierValue');
+            const finalResult = document.getElementById('finalResult');
+            const finalValue = document.getElementById('finalValue');
 
-        function displayRollResult(rolls, total, modifier, description) {
-            const resultDiv = document.getElementById('rollResult');
-            const resultLabel = document.getElementById('resultLabel');
-            const resultValue = document.getElementById('resultValue');
-            const resultDetails = document.getElementById('resultDetails');
-
-            resultLabel.textContent = description;
-            resultValue.textContent = total;
-
-            let rollsText = rolls.join(', ');
-            if (rolls.length > 1) {
-                rollsText += ` = ${rolls.reduce((a, b) => a + b, 0)}`;
-            }
+            individualResult.textContent = rolls.join(', ');
+            totalResult.textContent = total;
 
             if (modifier !== 0) {
-                resultDetails.textContent = `Rolls: [${rollsText}] + ${modifier} = ${total}`;
+                modifierResult.style.display = 'flex';
+                modifierValue.textContent = `${modifier >= 0 ? '+' : ''}${modifier}`;
+                finalResult.style.display = 'flex';
+                finalValue.textContent = finalTotal;
             } else {
-                resultDetails.textContent = `Rolls: [${rollsText}]`;
+                modifierResult.style.display = 'none';
+                finalResult.style.display = 'none';
             }
 
-            resultDiv.classList.remove('hidden');
+            resultsSection.style.display = 'block';
         }
 
-        // ==================== CHARACTER MANAGEMENT ====================
-        function addCharacter() {
-            const name = document.getElementById('characterName').value.trim();
-            const charClass = document.getElementById('characterClass').value.trim();
+        function addToHistory(numDice, diceSides, rolls, total, modifier, finalTotal) {
+            const timestamp = new Date().toLocaleTimeString();
+            const modifierText = modifier !== 0 ? ` ${modifier >= 0 ? '+' : ''}${modifier}` : '';
+            const historyText = `${timestamp} - ${numDice}d${diceSides}: ${rolls.join(', ')} = ${total}${modifierText} = ${finalTotal}`;
 
-            if (!name) {
-                showNotification('Please enter a character name', 'error');
-                return;
-            }
-
-            const character = {
-                id: Date.now(),
-                name: name,
-                class: charClass,
-                attributes: {
-                    str: parseInt(document.getElementById('strBonus').value) || 0,
-                    dex: parseInt(document.getElementById('dexBonus').value) || 0,
-                    con: parseInt(document.getElementById('conBonus').value) || 0,
-                    int: parseInt(document.getElementById('intBonus').value) || 0,
-                    wis: parseInt(document.getElementById('wisBonus').value) || 0,
-                    cha: parseInt(document.getElementById('chaBonus').value) || 0
-                }
-            };
-
-            characters.push(character);
-            clearCharacterForm();
-            displayCharacters();
-            updateCharacterSelect();
-            saveToLocalStorage();
-            showNotification(`Character "${name}" added!`, 'success');
-        }
-
-        function clearCharacterForm() {
-            document.getElementById('characterName').value = '';
-            document.getElementById('characterClass').value = '';
-            document.getElementById('strBonus').value = '0';
-            document.getElementById('dexBonus').value = '0';
-            document.getElementById('conBonus').value = '0';
-            document.getElementById('intBonus').value = '0';
-            document.getElementById('wisBonus').value = '0';
-            document.getElementById('chaBonus').value = '0';
-        }
-
-        function displayCharacters() {
-            const list = document.getElementById('charactersList');
-            
-            if (characters.length === 0) {
-                list.innerHTML = '<div class="empty-state">No characters yet. Create your first character!</div>';
-                return;
-            }
-
-            list.innerHTML = characters.map(char => `
-                <div class="character-item ${currentCharacter?.id === char.id ? 'active' : ''}">
-                    <div>
-                        <div class="character-name">${char.name}</div>
-                        <div style="font-size: 0.85em; opacity: 0.7;">${char.class || 'Unknown Class'}</div>
-                    </div>
-                    <div class="character-actions">
-                        <button class="char-btn char-btn-delete" onclick="deleteCharacter(${char.id})">Delete</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function deleteCharacter(id) {
-            if (confirm('Are you sure you want to delete this character?')) {
-                characters = characters.filter(c => c.id !== id);
-                if (currentCharacter?.id === id) {
-                    currentCharacter = null;
-                }
-                displayCharacters();
-                updateCharacterSelect();
-                saveToLocalStorage();
-                showNotification('Character deleted!', 'success');
-            }
-        }
-
-        function loadCharacter() {
-            const select = document.getElementById('characterSelect');
-            const characterId = select.value;
-
-            if (!characterId) {
-                currentCharacter = null;
-                return;
-            }
-
-            currentCharacter = characters.find(c => c.id == characterId);
-            if (currentCharacter) {
-                // Apply character bonus to modifier
-                const strBonus = currentCharacter.attributes.str;
-                document.getElementById('modifier').value = strBonus;
-                displayCharacters();
-                showNotification(`Loaded: ${currentCharacter.name}`, 'success');
-            }
-        }
-
-        function updateCharacterSelect() {
-            const select = document.getElementById('characterSelect');
-            select.innerHTML = '<option value="">No Character Selected</option>';
-            
-            characters.forEach(char => {
-                const option = document.createElement('option');
-                option.value = char.id;
-                option.textContent = `${char.name} (${char.class || 'Unknown'})`;
-                select.appendChild(option);
-            });
-        }
-
-        function exportCharacters() {
-            const data = JSON.stringify(characters, null, 2);
-            const blob = new Blob([data], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `characters-${Date.now()}.json`;
-            a.click();
-            showNotification('Characters exported!', 'success');
-        }
-
-        // ==================== ROLL HISTORY ====================
-        function addToHistory(description, rolls, total, modifier) {
-            const historyEntry = {
-                id: Date.now(),
-                timestamp: new Date().toLocaleString(),
-                description: description,
-                rolls: rolls,
-                total: total,
-                modifier: modifier,
-                character: currentCharacter?.name || 'Anonymous'
-            };
-
-            rollHistory.unshift(historyEntry);
-            if (rollHistory.length > 100) {
+            rollHistory.unshift(historyText);
+            if (rollHistory.length > 20) {
                 rollHistory.pop();
             }
 
-            displayRollHistory();
-            saveToLocalStorage();
+            updateHistoryDisplay();
         }
 
-        function displayRollHistory() {
-            const list = document.getElementById('historyList');
-
+        function updateHistoryDisplay() {
             if (rollHistory.length === 0) {
-                list.innerHTML = '<div class="empty-state">No rolls yet. Make your first roll!</div>';
-                return;
-            }
-
-            list.innerHTML = rollHistory.map(entry => `
-                <div class="history-item">
-                    <div class="history-time">${entry.timestamp}</div>
-                    <div class="history-roll">${entry.total}</div>
-                    <div class="history-description">
-                        ${entry.description}${entry.character !== 'Anonymous' ? ` - ${entry.character}` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function clearHistory() {
-            if (confirm('Are you sure you want to clear all roll history?')) {
-                rollHistory = [];
-                displayRollHistory();
-                saveToLocalStorage();
-                showNotification('History cleared!', 'success');
+                historyList.innerHTML = '<div class="history-empty">No rolls yet. Start rolling!</div>';
+            } else {
+                historyList.innerHTML = rollHistory
+                    .map(item => `<div class="history-item">${item}</div>`)
+                    .join('');
             }
         }
 
-        // ==================== PROBABILITY CALCULATOR ====================
-        function calculateProbability() {
-            const diceType = parseInt(document.getElementById('probDiceType').value);
-            const diceCount = parseInt(document.getElementById('probDiceCount').value);
-
-            const min = diceCount;
-            const max = diceCount * diceType;
-            const average = (min + max) / 2;
-
-            // Update statistics
-            document.getElementById('statsMin').textContent = min;
-            document.getElementById('statsMax').textContent = max;
-            document.getElementById('statsAverage').textContent = average.toFixed(2);
-
-            // Calculate probabilities
-            const probabilities = {};
-            
-            for (let i = min; i <= max; i++) {
-                probabilities[i] = calculateProbabilityForSum(i, diceCount, diceType);
-            }
-
-            // Display probabilities
-            const resultsDiv = document.getElementById('probabilityResults');
-            resultsDiv.innerHTML = Object.entries(probabilities).map(([value, probability]) => `
-                <div class="prob-item">
-                    <div class="prob-value">${(probability * 100).toFixed(1)}%</div>
-                    <div class="prob-label">Roll ${value}</div>
-                </div>
-            `).join('');
-        }
-
-        function calculateProbabilityForSum(targetSum, numDice, numSides) {
-            // Using dynamic programming to calculate probability
-            let dp = Array(targetSum + 1).fill(0);
-            
-            // Single die probabilities
-            for (let i = 1; i <= Math.min(numSides, targetSum); i++) {
-                dp[i] = 1;
-            }
-
-            // Multiple dice
-            for (let die = 2; die <= numDice; die++) {
-                let newDp = Array(targetSum + 1).fill(0);
-                for (let i = die; i <= targetSum; i++) {
-                    for (let j = 1; j <= numSides && j <= i; j++) {
-                        newDp[i] += dp[i - j];
-                    }
-                }
-                dp = newDp;
-            }
-
-            const totalOutcomes = Math.pow(numSides, numDice);
-            return dp[targetSum] / totalOutcomes;
-        }
-
-        // ==================== SETTINGS & MODES ====================
-        function toggleDarkMode() {
-            settings.darkMode = !settings.darkMode;
-            document.body.classList.toggle('light-mode');
-            document.getElementById('darkModeCheckbox').checked = settings.darkMode;
-            saveToLocalStorage();
-        }
-
-        function toggleSound() {
-            settings.soundEnabled = !settings.soundEnabled;
-            document.getElementById('soundToggle').textContent = settings.soundEnabled ? '🔊' : '🔇';
-            document.getElementById('soundToggleCheckbox').checked = settings.soundEnabled;
-            saveToLocalStorage();
-        }
-
-        function saveSettings() {
-            settings.autoSave = document.getElementById('autoSaveCheckbox').checked;
-            settings.hapticEnabled = document.getElementById('hapticCheckbox').checked;
-            saveToLocalStorage();
-            showNotification('Settings saved!', 'success');
-        }
-
-        function resetSettings() {
-            if (confirm('Reset all settings to default?')) {
-                settings = {
-                    soundEnabled: true,
-                    darkMode: true,
-                    autoSave: true,
-                    hapticEnabled: true
-                };
-                document.getElementById('soundToggleCheckbox').checked = true;
-                document.getElementById('darkModeCheckbox').checked = true;
-                document.getElementById('autoSaveCheckbox').checked = true;
-                document.getElementById('hapticCheckbox').checked = true;
-                saveToLocalStorage();
-                initializeUI();
-                showNotification('Settings reset to default!', 'success');
-            }
-        }
-
-        // ==================== SOUND EFFECTS ====================
-        function playSound(type) {
-            // Create a simple beep using Web Audio API
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            if (type === 'success') {
-                oscillator.frequency.value = 800;
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.1);
-            } else if (type === 'error') {
-                oscillator.frequency.value = 300;
-                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.2);
-            }
-        }
-
-        // ==================== NOTIFICATIONS ====================
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }
-
-        // ==================== TAB NAVIGATION ====================
-        function openTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('[id$="Tab"]').forEach(tab => {
-                tab.style.display = 'none';
-            });
-
-            // Show selected tab
-            const tabElement = document.getElementById(tabName + 'Tab');
-            if (tabElement) {
-                tabElement.style.display = 'block';
-            }
-
-            // Recalculate probability if opening calculator
-            if (tabName === 'calculator') {
-                setTimeout(() => calculateProbability(), 100);
-            }
-        }
-
-        // ==================== LOCAL STORAGE ====================
-        function saveToLocalStorage() {
-            if (settings.autoSave) {
-                localStorage.setItem('diceRollerCharacters', JSON.stringify(characters));
-                localStorage.setItem('diceRollerHistory', JSON.stringify(rollHistory));
-                localStorage.setItem('diceRollerSettings', JSON.stringify(settings));
-            }
-        }
-
-        function loadFromLocalStorage() {
-            try {
-                const savedCharacters = localStorage.getItem('diceRollerCharacters');
-                if (savedCharacters) {
-                    characters = JSON.parse(savedCharacters);
-                }
-
-                const savedHistory = localStorage.getItem('diceRollerHistory');
-                if (savedHistory) {
-                    rollHistory = JSON.parse(savedHistory);
-                }
-
-                const savedSettings = localStorage.getItem('diceRollerSettings');
-                if (savedSettings) {
-                    settings = { ...settings, ...JSON.parse(savedSettings) };
-                }
-            } catch (e) {
-                console.error('Error loading from local storage:', e);
-            }
-        }
-
-        // ==================== KEYBOARD SHORTCUTS ====================
-        document.addEventListener('keydown', function(event) {
-            // Enter to roll
-            if (event.key === 'Enter' && !event.ctrlKey) {
-                const activeTab = document.getElementById('rollerTab');
-                if (activeTab && activeTab.style.display !== 'none') {
-                    rollDice();
-                }
-            }
-            // Ctrl+D for dark mode
-            if (event.ctrlKey && event.key === 'd') {
-                event.preventDefault();
-                toggleDarkMode();
-            }
-            // Ctrl+S for sound toggle
-            if (event.ctrlKey && event.key === 's') {
-                event.preventDefault();
-                toggleSound();
-            }
+        // Clear button
+        clearBtn.addEventListener('click', () => {
+            diceDisplay.innerHTML = '';
+            resultsSection.style.display = 'none';
+            copyBtn.style.display = 'none';
+            numDiceInput.value = 1;
+            modifierInput.value = 0;
+            updateModifierSign();
+            lastResult = null;
         });
 
-        // ==================== INITIAL SETUP ====================
-        // Show roller tab by default
-        openTab('roller');
+        // Copy button
+        copyBtn.addEventListener('click', () => {
+            if (!lastResult) return;
+
+            const text = `Ordem Paranormal Dice Roll:\n` +
+                `Dice: ${lastResult.numDice}d${lastResult.diceSides}\n` +
+                `Rolls: ${lastResult.rolls.join(', ')}\n` +
+                `Total: ${lastResult.total}\n` +
+                `${lastResult.modifier !== 0 ? `Modifier: ${lastResult.modifier >= 0 ? '+' : ''}${lastResult.modifier}\n` : ''}` +
+                `Final Result: ${lastResult.finalTotal}`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            });
+        });
+
+        // Initialize
+        updateModifierSign();
     </script>
 </body>
 </html>
